@@ -15,4 +15,13 @@ App = Ember.Application.extend({
 
 loadInitializers(App, config.modulePrefix);
 
+App.AuthenticatedRoute = Ember.Route.extend({
+  session: Ember.inject.service(),
+  beforeModel: function(transition) {
+    if (!this.get('session.isAuthenticated')) {
+      return this.transitionTo('login');
+    }
+  }
+});
+
 export default App;
